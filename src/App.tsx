@@ -18,6 +18,11 @@ class App extends React.Component {
           axisPointer: {
             show: true,
             type: 'line',
+            lineStyle: {
+              width: 1,
+              type: 'solid',
+              color: '555'
+            }
           },
           backgroundColor: "#333",
           title: {
@@ -60,9 +65,6 @@ class App extends React.Component {
             left: 0
           },
           tooltip: {
-            axisPointer: {
-              type: 'cross'
-            },
             trigger: "item",
             // position: function(point, params, dom, rect, size) {
             //   console.log(point)
@@ -78,10 +80,10 @@ class App extends React.Component {
             type: "value"
           },
           yAxis: {
-            type: "category"
+            type: "category",
             // data: ['Sell', 'Buy'],
             // boundaryGap: false,
-            // boundaryGap: [0, '100%'],
+            boundaryGap: [0, "50%"]
             // data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
           },
           series: [
@@ -116,7 +118,7 @@ class App extends React.Component {
               data: [
                 {
                   name: 8623.54,
-                  value: 1000,
+                  value: 1000
                 },
                 {
                   name: 8623.54,
@@ -155,7 +157,7 @@ class App extends React.Component {
               itemStyle: {
                 color: "darkred"
               },
-            
+
               data: [
                 {
                   name: 8623.54,
