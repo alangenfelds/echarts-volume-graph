@@ -15,106 +15,77 @@ class App extends React.Component {
     return (
       <ReactEcharts
         option={{
-          axisPointer: {
-            show: true,
-            type: 'line',
-            lineStyle: {
-              width: 1,
-              type: 'solid',
-              color: '555'
-            }
-          },
-          backgroundColor: "#333",
-          title: {
-            id: "DA-DC",
-            left: "center",
-            text: "Depth Chart",
-            borderColor: "#ccc",
-            borderWidth: 1,
-            borderRadius: 5,
-            top: 10,
-            padding: [15, 15, 15, 15],
-            textStyle: {
-              color: "#ccc"
-            }
-          },
-          // toolbox: {
-          //   feature: {
-          //     dataZoom: {
-          //       yAxisIndex: "none"
-          //     },
-          //     restore: {},
-          //     saveAsImage: {}
-          //   }
-          // },
-          // legend: {
-          //   // show: false,
-          //   data: [{
-          //     name: 'bid',
-          //     // compulsorily set icon as a circle
-          //     icon: 'triangle',
-          //     // set up the text in red
-          //     textStyle: {
-          //         color: 'darkgreen'
-          //     }
-          // }]
-          // },
-          grid: {
-            // containLabel: true,
-            // show: true,
-            left: 0
-          },
           tooltip: {
-            trigger: "item",
-            // position: function(point, params, dom, rect, size) {
-            //   console.log(point)
-            //   // fixed at top
-            //   return [point[0] + 100, point[1]];
-            // }
+            // trigger: "item",
             position: "right",
-            // formatter: 'category name: {b}<br />Series name: {a}: data value: {c} '
             formatter: "{b}<br />{a}: {c}<br />$123,456.789"
           },
-          xAxis: {
-            show: false,
-            type: "value"
-          },
-          yAxis: {
-            type: "category",
-            // data: ['Sell', 'Buy'],
-            // boundaryGap: false,
-            boundaryGap: [0, "50%"]
-            // data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-          },
+          // tooltip: {
+          //   trigger: "axis",
+          //   formatter: "{b}<br />{a}: {c}<br />$123,456.789"
+          // },
+          backgroundColor: "#24303a",
+          // title: {
+          //   id: "DA-DC",
+          //   left: "center",
+          //   text: "Depth Chart",
+          //   borderColor: "#ccc",
+          //   borderWidth: 1,
+          //   borderRadius: 5,
+          //   top: 10,
+          //   padding: [15, 15, 15, 15],
+          //   textStyle: {
+          //     color: "#ccc"
+          //   }
+          // },
+
+          grid: [
+            { y: "45%", left: 0, height: "45%" },
+            {
+              left: 0,
+              height: "45%"
+            }
+          ],
+
+          xAxis: [
+            {
+              gridIndex: 0,
+              show: false,
+              type: "value"
+            },
+            {
+              gridIndex: 1,
+              show: false,
+              type: "value"
+            }
+          ],
+          yAxis: [
+            {
+              gridIndex: 0,
+              type: "category",
+              position: "right"
+            },
+            {
+              gridIndex: 1,
+              type: "category",
+              position: "right"
+            }
+          ],
           series: [
             {
-              name: "Sell",
-              type: "bar",
-              // stack: 'Sell',
+              name: "Buy",
+              type: "line",
+              step: "middle",
               coordinateSystem: "cartesian2d",
               yAxisIndex: 0,
               xAxisIndex: 0,
-              barWidth: "10%",
-              barGap: 0,
-
-              // smooth: true,
-              // symbol: 'none',
-              // sampling: 'average',
+              gridIndex: 1,
               itemStyle: {
-                color: "darkgreen"
+                color: "#31412e"
               },
-              // areaStyle: {
-              //   color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              //     {
-              //       offset: 0,
-              //       color: "rgb(255, 158, 68)"
-              //     },
-              //     {
-              //       offset: 1,
-              //       color: "rgb(255, 70, 131)"
-              //     }
-              //   ])
-              // },
+              areaStyle: {
+                color: "#31412e"
+              },
               data: [
                 {
                   name: 8623.54,
@@ -143,21 +114,23 @@ class App extends React.Component {
               ]
             },
             {
-              name: "Buy",
-              type: "bar",
-              barCategoryGap: 0,
-              yAxisIndex: 0,
-              barWidth: "10%",
-              barGap: 0,
-              // seriesLayoutBy: 'column',
-              // stack: 'Sell',
-              // smooth: true,
-              // symbol: 'none',
-              // sampling: 'average',
+              name: "Sell",
+              type: "line",
+              step: "middle",
+              xAxisIndex: 1,
+              yAxisIndex: 1,
               itemStyle: {
-                color: "darkred"
+                color: "#45262e"
               },
-
+              lineStyle: {
+                width: 3
+                // shadowColor: "rgba(0,0,0,0.4)",
+                // shadowBlur: 10,
+                // shadowOffsetY: 10
+              },
+              areaStyle: {
+                color: "#45262e"
+              },
               data: [
                 {
                   name: 8623.54,
