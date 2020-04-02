@@ -1,49 +1,108 @@
 import React from "react";
-
 import ReactEcharts from "echarts-for-react";
-// import echarts from "echarts";
 
-// var seriesLabel = {
-//   normal: {
-//       show: true,
-//       textBorderColor: '#333',
-//       textBorderWidth: 2
-//   }
-// }
+
+const data = [
+  {
+    name: 8623.54,
+    value: 1000
+  },
+  {
+    name: 8623.54,
+    value: 980
+  },
+  {
+    name: 8623.54,
+    value: 800
+  },
+  {
+    name: 8623.54,
+    value: 780
+  },
+  {
+    name: 8623.54,
+    value: 740
+  },
+  {
+    name: 8623.54,
+    value: 600
+  },
+  {
+    name: 8623.54,
+    value: 540
+  },
+  {
+    name: 8623.54,
+    value: 500
+  },
+  {
+    name: 8623.54,
+    value: 440
+  },
+  {
+    name: 8623.54,
+    value: 310
+  },
+  {
+    name: 8623.54,
+    value: 200
+  },
+  {
+    name: 8623.54,
+    value: 155
+  },
+  {
+    name: 8623.54,
+    value: 55
+  },
+  {
+    name: 8623.54,
+    value: 10
+  }
+];
+
 class App extends React.Component {
   render() {
     return (
       <ReactEcharts
         option={{
           tooltip: {
-            // trigger: "item",
-            position: "right",
-            formatter: "{b}<br />{a}: {c}<br />$123,456.789"
+            trigger: "axis",
+            // position: "right",
+            position: function(point, params, dom, rect, size) {
+              return ["90%", point[1] - 15];
+            },
+            backgroundColor: "#24303a",
+            formatter: "{b}<br />{a}: {c}<br />$123,456.789",
+            confine: true,
+            axisPointer: {
+              type: "line",
+              label: {
+                show: true,
+                backgroundColor: "transparent",
+                color: "red",
+                padding: [0, 0, 0, -8],
+                formatter: "●",
+                fontSize: 20
+              },
+              lineStyle: {
+                color: "red"
+              }
+            }
           },
-          // tooltip: {
-          //   trigger: "axis",
-          //   formatter: "{b}<br />{a}: {c}<br />$123,456.789"
-          // },
+
+          title: {
+            show: false
+          },
           backgroundColor: "#24303a",
-          // title: {
-          //   id: "DA-DC",
-          //   left: "center",
-          //   text: "Depth Chart",
-          //   borderColor: "#ccc",
-          //   borderWidth: 1,
-          //   borderRadius: 5,
-          //   top: 10,
-          //   padding: [15, 15, 15, 15],
-          //   textStyle: {
-          //     color: "#ccc"
-          //   }
-          // },
 
           grid: [
-            { y: "45%", left: 0, height: "45%" },
+            { y: "50%", bottom: 0, left: 0, height: "50%" },
             {
               left: 0,
-              height: "45%"
+              top: 0,
+              bottom: 0,
+              height: "50%"
             }
           ],
 
@@ -63,100 +122,51 @@ class App extends React.Component {
             {
               gridIndex: 0,
               type: "category",
-              position: "right"
+              data: data // required for 'axis' tooltip
             },
             {
               gridIndex: 1,
               type: "category",
-              position: "right"
+              inverse: true,
+              data: data
             }
           ],
           series: [
             {
               name: "Buy",
               type: "line",
-              step: "middle",
-              coordinateSystem: "cartesian2d",
+              step: true,
+              symbol: "none",
               yAxisIndex: 0,
               xAxisIndex: 0,
-              gridIndex: 1,
               itemStyle: {
-                color: "#31412e"
+                color: "#546b4f"
+              },
+              lineStyle: {
+                width: 2
               },
               areaStyle: {
                 color: "#31412e"
               },
-              data: [
-                {
-                  name: 8623.54,
-                  value: 1000
-                },
-                {
-                  name: 8623.54,
-                  value: 800
-                },
-                {
-                  name: 8623.54,
-                  value: 600
-                },
-                {
-                  name: 8623.54,
-                  value: 500
-                },
-                {
-                  name: 8623.54,
-                  value: 300
-                },
-                {
-                  name: 8623.54,
-                  value: 0
-                }
-              ]
+              data: data
             },
             {
               name: "Sell",
               type: "line",
-              step: "middle",
+              step: true,
               xAxisIndex: 1,
               yAxisIndex: 1,
+              symbol: "none",
               itemStyle: {
-                color: "#45262e"
+                color: "#6b3f4b"
               },
               lineStyle: {
-                width: 3
-                // shadowColor: "rgba(0,0,0,0.4)",
-                // shadowBlur: 10,
-                // shadowOffsetY: 10
+                width: 2
               },
               areaStyle: {
                 color: "#45262e"
               },
-              data: [
-                {
-                  name: 8623.54,
-                  value: 0
-                },
-                {
-                  name: 8623.54,
-                  value: 300
-                },
-                {
-                  name: 8623.54,
-                  value: 400
-                },
-                {
-                  name: 8623.54,
-                  value: 600
-                },
-                {
-                  name: 8623.54,
-                  value: 800
-                },
-                {
-                  name: 8623.54,
-                  value: 1000
-                }
-              ]
+              data: data
             }
           ]
         }}
