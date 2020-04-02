@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import ReactEcharts from "echarts-for-react";
 
 type PriceDepthItem = {
@@ -11,24 +11,28 @@ export interface DepthChartProps {
   offerDepth: PriceDepthItem[];
 }
 
-const DepthChart: React.FC<DepthChartProps> = ({
-  bidDepth,
-  offerDepth
-}): React.ReactElement => {
-  const formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD"
-  });
+const DepthChart: React.FC<DepthChartProps> = React.memo(
+  ({ bidDepth, offerDepth }) => {
+    const formatter = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD"
+    });
 
-  const transform = (data: PriceDepthItem[]) =>
-    data.map(({ size, price }) => ({ name: size, value: price }));
+    const transform = (data: PriceDepthItem[]) =>
+      data.map(({ size, price }) => ({ name: size, value: price }));
 
-  const bidData = transform(bidDepth);
-  const sellData = transform(offerDepth);
+    const bidData = useMemo(() => {
+      if (!bidDepth) return [];
+      return transform(bidDepth);
+    }, [bidDepth]);
 
-  return (
-    <ReactEcharts
-      option={{
+    const sellData = useMemo(() => {
+      if (!offerDepth) return [];
+      return transform(offerDepth);
+    }, [offerDepth]);
+
+    const opts = useMemo(() => {
+      return {
         animation: false,
         tooltip: {
           trigger: "axis",
@@ -141,11 +145,17 @@ const DepthChart: React.FC<DepthChartProps> = ({
             data: sellData
           }
         ]
-      }}
-      style={{ height: "80vh", left: 50, top: 50, width: "90vw" }}
-      opts={{ renderer: "svg" }}
-    />
-  );
-};
+      };
+    }, [bidData, sellData, formatter]);
+
+    return (
+      <ReactEcharts
+        option={opts}
+        style={{ height: "80vh", left: 50, top: 50, width: "90vw" }}
+        opts={{ renderer: "svg" }}
+      />
+    );
+  }
+);
 
 export default DepthChart;
