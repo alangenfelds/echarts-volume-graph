@@ -85,6 +85,7 @@ class App extends React.Component {
             position: function(point, params, dom, rect, size) {
               return ["90%", point[1] - 15];
             },
+            transitionDuration: 0,
             backgroundColor: "#24303a",
             // formatter: "{b}<br />{a}: {c}<br />$123,456.789",
             formatter: function(params) {
