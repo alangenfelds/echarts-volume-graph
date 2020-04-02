@@ -1,71 +1,84 @@
 import React from "react";
 import ReactEcharts from "echarts-for-react";
 
-
 const data = [
   {
     name: 8623.54,
-    value: 1000
+    value: 1000.99
   },
   {
     name: 8623.54,
-    value: 980
+    value: 980.99
   },
   {
     name: 8623.54,
-    value: 800
+    value: 830.99
   },
   {
     name: 8623.54,
-    value: 780
+    value: 815.99
   },
   {
     name: 8623.54,
-    value: 740
+    value: 800.99
   },
   {
     name: 8623.54,
-    value: 600
+    value: 780.99
   },
   {
     name: 8623.54,
-    value: 540
+    value: 740.99
   },
   {
     name: 8623.54,
-    value: 500
+    value: 600.99
   },
   {
     name: 8623.54,
-    value: 440
+    value: 540.99
   },
   {
     name: 8623.54,
-    value: 310
+    value: 500.99
   },
   {
     name: 8623.54,
-    value: 200
+    value: 440.99
   },
   {
     name: 8623.54,
-    value: 155
+    value: 310.99
   },
   {
     name: 8623.54,
-    value: 55
+    value: 200.33
   },
   {
     name: 8623.54,
-    value: 10
+    value: 155.22
+  },
+  {
+    name: 8623.54,
+    value: 55.31
+  },
+  {
+    name: 8623.54,
+    value: 33.12
   }
 ];
+
+var formatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD"
+});
 
 class App extends React.Component {
   render() {
     return (
       <ReactEcharts
         option={{
+          animation: false,
           tooltip: {
             trigger: "axis",
             // position: "right",
@@ -73,7 +86,16 @@ class App extends React.Component {
               return ["90%", point[1] - 15];
             },
             backgroundColor: "#24303a",
-            formatter: "{b}<br />{a}: {c}<br />$123,456.789",
+            // formatter: "{b}<br />{a}: {c}<br />$123,456.789",
+            formatter: function(params) {
+              const {
+                data: { name, value },
+                seriesName
+              } = params[0];
+              return `${name}<br />${seriesName}: ${value}<br />${formatter.format(
+                name * value
+              )}`;
+            },
             confine: true,
             axisPointer: {
               type: "line",
@@ -85,6 +107,7 @@ class App extends React.Component {
                 formatter: "●",
                 fontSize: 20
               },
+              // animation: false,
               lineStyle: {
                 color: "red"
               }
